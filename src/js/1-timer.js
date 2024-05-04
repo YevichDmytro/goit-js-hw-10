@@ -7,6 +7,7 @@ let userSelectedDate;
 
 const dateTimePicker = document.querySelector('input[type="text"]');
 const btnStartTimer = document.querySelector('button[data-start]');
+
 const daysCounter = document.querySelector('.value[data-days]');
 const hoursCounter = document.querySelector('.value[data-hours]');
 const minutesCounter = document.querySelector('.value[data-minutes]');
@@ -21,19 +22,19 @@ const options = {
     userSelectedDate = selectedDates[0];
 
     if (
-      userSelectedDate.getTime() < Date.now() ||
-      userSelectedDate.getTime() === Date.now()
+      userSelectedDate.getTime() === Date.now() ||
+      userSelectedDate.getTime() < Date.now()
     ) {
-      iziToast.error({
-        position: 'topRight',
+      iziToast.warning({
         message: 'Please choose a date in the future',
-        backgroundColor: 'red',
-        titleColor: 'white',
-        messageColor: 'white',
-        iconColor: 'white',
-        progressBarColor: 'black',
         closeOnEscape: 'true',
         closeOnClick: 'true',
+        position: 'topRight',
+        titleSize: '20',
+        messageSize: '16',
+        progressBarColor: '#ffffff',
+        messageColor: '#000000',
+        backgroundColor: 'orange',
       });
 
       btnStartTimer.setAttribute('disabled', '');
@@ -43,7 +44,7 @@ const options = {
   },
 };
 
-const funcOfLib = flatpickr(dateTimePicker, options);
+flatpickr(dateTimePicker, options);
 
 function convertMs(ms) {
   const second = 1000;
@@ -59,27 +60,25 @@ function convertMs(ms) {
   return { days, hours, minutes, seconds };
 }
 
-function addLeadingZero(obj) {
-  for (const key in obj) {
-    obj[key] = obj[key].toString().padStart(2, '0');
+function addLeadingZero(dataValueObj) {
+  for (const key in dataValueObj) {
+    dataValueObj[key] = dataValueObj[key].toString().padStart(2, '0');
   }
-  return obj;
+  return dataValueObj;
 }
 
 function handler(e) {
   dateTimePicker.setAttribute('disabled', '');
   btnStartTimer.setAttribute('disabled', '');
 
-  const timerId = setInterval(() => setTimeFunc(), 1000);
+  const timerId = setInterval(() => createTimer(), 1000);
 
-  function setTimeFunc() {
+  function createTimer() {
     let time = userSelectedDate.getTime() - Date.now();
 
-    if (time === 0 || time < 0) {
+    if (time < 0) {
       clearInterval(timerId);
-
       dateTimePicker.removeAttribute('disabled');
-
       return;
     }
 

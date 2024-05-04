@@ -15,15 +15,24 @@
   letter-spacing: 0.04em;
   color: #2e2f42;
   padding-left: 16px;
+  outline: transparent;
+
+  &:focus {
+    border-color: blue;
+  }
+
+  &:hover {
+    border: 1px solid black;
+  }
 
   &:disabled {
-    background-color: #cfcfcf;
-    color: #989898;
+    background-color: #fafafa;
+    color: #808080;
     cursor: not-allowed;
   }
 }
 
-button[data-start] {
+.timer-start-btn {
   border-color: transparent;
   border-radius: 8px;
   width: 75px;

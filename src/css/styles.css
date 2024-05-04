@@ -34,7 +34,8 @@
   border: 2px solid lightskyblue;
   border-radius: 12px;
   background-color: lightskyblue;
-  width: 140px;
+  min-width: 140px;
+  max-width: fit-content;
   text-align: center;
 
   &:hover {
