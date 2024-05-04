@@ -60,29 +60,31 @@ function convertMs(ms) {
   return { days, hours, minutes, seconds };
 }
 
-function addLeadingZero(dataValueObj) {
-  for (const key in dataValueObj) {
-    dataValueObj[key] = dataValueObj[key].toString().padStart(2, '0');
+function addLeadingZero(unitsOfTimeObj) {
+  for (const unitOfTime in unitsOfTimeObj) {
+    unitsOfTimeObj[unitOfTime] = unitsOfTimeObj[unitOfTime]
+      .toString()
+      .padStart(2, '0');
   }
-  return dataValueObj;
+  return unitsOfTimeObj;
 }
 
-function handler(e) {
+function timerHandler(e) {
   dateTimePicker.setAttribute('disabled', '');
   btnStartTimer.setAttribute('disabled', '');
 
   const timerId = setInterval(() => createTimer(), 1000);
 
   function createTimer() {
-    let time = userSelectedDate.getTime() - Date.now();
+    let timeDifference = userSelectedDate.getTime() - Date.now();
 
-    if (time < 0) {
+    if (timeDifference < 0) {
       clearInterval(timerId);
       dateTimePicker.removeAttribute('disabled');
       return;
     }
 
-    const timerObj = addLeadingZero(convertMs(time));
+    const timerObj = addLeadingZero(convertMs(timeDifference));
     const { days, hours, minutes, seconds } = timerObj;
 
     daysCounter.textContent = days;
@@ -92,4 +94,4 @@ function handler(e) {
   }
 }
 
-btnStartTimer.addEventListener('click', handler);
+btnStartTimer.addEventListener('click', timerHandler);

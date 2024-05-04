@@ -29,6 +29,7 @@
     background-color: #fafafa;
     color: #808080;
     cursor: not-allowed;
+    border: 1px solid #808080;
   }
 }
 
